@@ -12,20 +12,21 @@ const MovieDetail = () => {
   const [movieDetail, setMovieDetail] = useState({})
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => loadMovieDetail(), [id])
-
-  const loadMovieDetail = async () => {
-    try {
-      setLoading(true)
-      const response = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`)
-      if (response.status === 200) setMovieDetail(response.data)
-      else console.error('Something went wrong', response.status)
-    } catch (err) {
-      console.error('Something went wrong', err)
-    } finally {
-      setLoading(false)
+  useEffect(() => {
+    const loadMovieDetail = async () => {
+      try {
+        setLoading(true)
+        const response = await axios.get(`${API_URL}?apikey=${API_KEY}&i=${id}`)
+        if (response.status === 200) setMovieDetail(response.data)
+        else console.error('Something went wrong', response.status)
+      } catch (err) {
+        console.error('Something went wrong', err)
+      } finally {
+        setLoading(false)
+      }
     }
-  }
+    loadMovieDetail()
+  }, [id])
 
   return (
     <>
