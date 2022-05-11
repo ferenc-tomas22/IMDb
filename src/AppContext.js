@@ -14,10 +14,16 @@ export const AppContextProvider = ({ children }) => {
       setFavoriteMovies(JSON.parse(storedFavoriteMovies))
   }, [])
 
-  useEffect(() => {
-    localStorage.setItem('movies', JSON.stringify(movies))
-    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies))
-  }, [movies, favoriteMovies])
+  useEffect(
+    () => localStorage.setItem('movies', JSON.stringify(movies)),
+    [movies]
+  )
+
+  useEffect(
+    () =>
+      localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies)),
+    [favoriteMovies]
+  )
 
   return (
     <AppContext.Provider
