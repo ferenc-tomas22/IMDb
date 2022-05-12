@@ -73,7 +73,10 @@ const MovieGridTemplate = ({ movies }) => {
                     id={movie.imdbID}
                     className='text-center list-group-flush'
                   >
-                    <ListGroupItem id={movie.imdbID}>
+                    <ListGroupItem
+                      id={movie.imdbID}
+                      style={{ textTransform: 'capitalize' }}
+                    >
                       {`Type: ${movie.Type ?? ''}`}
                       <br />
                       {`Year: ${movie.Year ?? ''}`}
