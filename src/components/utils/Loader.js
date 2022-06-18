@@ -1,8 +1,8 @@
 import React from 'react'
 
-const loader = ({ show }) => {
+export const Loader = ({ show }) => {
   return (
-    <div className={`download-loader ${show ? 'show' : ''}`}>
+    <div className={ `download-loader ${ show ? 'show' : '' }` }>
       <div className='content'>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -18,5 +18,3 @@ const loader = ({ show }) => {
     </div>
   )
 }
-
-export default loader

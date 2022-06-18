@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { Container, Col, Row, Button } from 'react-bootstrap'
-import Loader from '../utils/Loader' 
+import { Loader } from '../utils/Loader' 
 import axios from 'axios'
 
 const API_KEY = process.env.REACT_APP_API_KEY ?? '64940d9e'

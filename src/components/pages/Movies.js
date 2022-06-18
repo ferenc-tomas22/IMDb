@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useMovies } from '../../AppProvider'
 import MovieGridTemplate from '../utils/MovieGridTemplate'
 import { Container, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
 import axios from 'axios'
-import Loader from '../utils/Loader'
+import { Loader } from '../utils/Loader'
 
 const API_KEY = process.env.REACT_APP_API_KEY ?? '64940d9e'
 const API_URL = process.env.REACT_APP_API_URL ?? 'https://omdbapi.com/'
@@ -14,30 +14,29 @@ const Movies = () => {
   const [ searchValue, setSearchValue ] = useState('')
   const { movies, setMovies } = useMovies()
 
-  useEffect(() => {
-    const handleKeyDown = e => e.key === 'Enter' && handleSearch()
-    ref.current?.focus()
-    window.addEventListener('keydown', e => handleKeyDown(e))
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  const handleSearch = async () => {
-    if (searchValue.length > 0) {
+  const handleSearch = useCallback(async () => {
+    if (searchValue) {
       try {
         setLoading(true)
         const response = await axios.get(`${ API_URL }?apikey=${ API_KEY }&s=${ searchValue }`)
-        if (response.status === 200) {
-          const data = response.data.Searc
-          console.log('data: ', data)
-          if (data.length > 0) setMovies(data)
-        } else console.error('Something went wrong', response.status)
+        const { data, status } = response
+        if (status === 200) {
+          if (data.Search.length > 0) setMovies(data.Search)
+        } else console.error('Something went wrong', status)
       } catch (err) {
         console.error('Something went wrong', err)
       } finally {
         setLoading(false)
       }
     }
-  }
+  }, [ searchValue, setMovies ])
+
+  useEffect(() => {
+    const handleKeyDown = e => e.key === 'Enter' && handleSearch()
+    ref.current?.focus()
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [ handleSearch ])
 
   return (
     <Container>
