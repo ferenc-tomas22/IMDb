@@ -1,13 +1,7 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
-import { AppContext } from '../../AppContext'
+import React, { useState, useEffect, useRef } from 'react'
+import { useMovies } from '../../AppProvider'
 import MovieGridTemplate from '../utils/MovieGridTemplate'
-import {
-  Container,
-  Row,
-  InputGroup,
-  FormControl,
-  Button,
-} from 'react-bootstrap'
+import { Container, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
 import axios from 'axios'
 import Loader from '../utils/Loader'
 
@@ -15,22 +9,26 @@ const API_KEY = process.env.REACT_APP_API_KEY ?? '64940d9e'
 const API_URL = process.env.REACT_APP_API_URL ?? 'https://omdbapi.com/'
 
 const Movies = () => {
-  const ref = useRef()
-  const [searchValue, setSearchValue] = useState('')
-  const [loading, setLoading] = useState(false)
-  const { movies, setMovies } = useContext(AppContext)
+  const ref = useRef(null)
+  const [ loading, setLoading ] = useState(false)
+  const [ searchValue, setSearchValue ] = useState('')
+  const { movies, setMovies } = useMovies()
 
-  useEffect(() => ref.current.focus(), [])
+  useEffect(() => {
+    const handleKeyDown = e => e.key === 'Enter' && handleSearch()
+    ref.current?.focus()
+    window.addEventListener('keydown', e => handleKeyDown(e))
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
 
   const handleSearch = async () => {
     if (searchValue.length > 0) {
       try {
         setLoading(true)
-        const response = await axios.get(
-          `${API_URL}?apikey=${API_KEY}&s=${searchValue}`
-        )
+        const response = await axios.get(`${ API_URL }?apikey=${ API_KEY }&s=${ searchValue }`)
         if (response.status === 200) {
-          const data = response.data.Search
+          const data = response.data.Searc
+          console.log('data: ', data)
           if (data.length > 0) setMovies(data)
         } else console.error('Something went wrong', response.status)
       } catch (err) {
@@ -49,15 +47,15 @@ const Movies = () => {
             type='text'
             size='sm'
             placeholder='Search for a movie'
-            ref={ref}
-            value={searchValue ?? ''}
-            onChange={(e) => setSearchValue(e.target.value)}
+            ref={ ref }
+            value={ searchValue ?? '' }
+            onChange={ e => setSearchValue(e.target.value) }
           />
           <Button
             variant='secondary'
             size='sm'
             className='shadow px-3'
-            onClick={handleSearch}
+            onClick={ handleSearch }
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -71,8 +69,8 @@ const Movies = () => {
           </Button>
         </InputGroup>
       </Row>
-      <MovieGridTemplate movies={movies} />
-      <Loader show={loading} />
+      <MovieGridTemplate movies={ movies } />
+      <Loader show={ loading } />
     </Container>
   )
 }

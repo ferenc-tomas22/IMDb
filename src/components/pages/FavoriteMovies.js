@@ -1,14 +1,14 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../../AppContext'
-import MovieGridTemplate from '../utils/MovieGridTemplate'
+import React from 'react'
+import { useMovies } from '../../AppProvider'
 import { Container, Row } from 'react-bootstrap'
+import MovieGridTemplate from '../utils/MovieGridTemplate'
 
 const FavoriteMovies = () => {
-  const { favoriteMovies } = useContext(AppContext)
+  const { favoriteMovies } = useMovies()
 
   return favoriteMovies.length > 0 ? (
     <Container>
-      <MovieGridTemplate movies={favoriteMovies} />
+      <MovieGridTemplate movies={ favoriteMovies } />
     </Container>
   ) : (
     <Container>

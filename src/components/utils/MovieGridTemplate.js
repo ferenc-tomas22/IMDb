@@ -1,34 +1,25 @@
-import React, { useState, useRef, useEffect, useContext } from 'react'
-import { AppContext } from '../../AppContext'
+import React, { useState, useRef, useEffect } from 'react'
+import { useMovies } from '../../AppProvider'
 import { useHistory } from 'react-router-dom'
-import {
-  CardGroup,
-  Card,
-  ListGroup,
-  ListGroupItem,
-  Row,
-  Col,
-} from 'react-bootstrap'
+import { CardGroup, Card, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap'
 
 const recordsPerPage = 20
 
 const MovieGridTemplate = ({ movies }) => {
   const history = useHistory()
   const pageRecords = useRef(recordsPerPage)
-  const [moviesInPage, setMoviesInPage] = useState([])
-  const { favoriteMovies, setFavoriteMovies } = useContext(AppContext)
+  const [ moviesInPage, setMoviesInPage ] = useState([])
+  const { favoriteMovies, setFavoriteMovies } = useMovies()
 
   useEffect(() => {
-    if (movies.length > recordsPerPage)
-      setMoviesInPage(movies.slice(0, recordsPerPage))
+    if (movies.length > recordsPerPage) setMoviesInPage(movies.slice(0, recordsPerPage))
     else setMoviesInPage(movies)
-  }, [movies])
+  }, [ movies ])
 
   const isFavoriteMovie = (e, movie) => {
     e.stopPropagation()
-    let movies = [...favoriteMovies]
-    if (movies.find((m) => m.imdbID === movie.imdbID))
-      movies = movies.filter((m) => m.imdbID !== movie.imdbID)
+    let movies = [ ...favoriteMovies ]
+    if (movies.find(m => m.imdbID === movie.imdbID)) movies = movies.filter(m => m.imdbID !== movie.imdbID)
     else movies.push(movie)
     setFavoriteMovies(movies)
   }
