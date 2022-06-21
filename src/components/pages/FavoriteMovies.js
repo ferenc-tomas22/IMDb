@@ -1,5 +1,5 @@
 import React from 'react'
-import { useMovies } from '../../AppProvider'
+import { useMovies } from '../../AppContext'
 import { Container, Row } from 'react-bootstrap'
 import MovieGridTemplate from '../utils/MovieGridTemplate'
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useMovies } from '../../AppProvider'
+import { useMovies } from '../../AppContext'
 import { useHistory } from 'react-router-dom'
 import { CardGroup, Card, ListGroup, ListGroupItem, Row, Col } from 'react-bootstrap'
 

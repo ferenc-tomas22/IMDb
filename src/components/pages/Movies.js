@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
-import { useMovies } from '../../AppProvider'
+import { useMovies } from '../../AppContext'
 import MovieGridTemplate from '../utils/MovieGridTemplate'
 import { Container, Row, InputGroup, FormControl, Button } from 'react-bootstrap'
 import axios from 'axios'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { Navbar, Nav, Container, Button } from 'react-bootstrap'
 
 function NavigationBar() {
@@ -8,7 +8,7 @@ function NavigationBar() {
       <Navbar bg='dark' variant='dark' className='sticky-top shadow-lg'>
         <Container className='mx-5'>
           <Navbar.Brand className='d-flex flex-row'>
-            <Link to='/' style={{ color: '#F6F6F6', textDecoration: 'none' }}>
+            <NavLink to='/' style={{ color: '#F6F6F6', textDecoration: 'none' }}>
               <Button variant='dark' className='rounded-pill px-5'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -22,35 +22,23 @@ function NavigationBar() {
                 </svg>
                 Movie Database
               </Button>
-            </Link>
+            </NavLink>
           </Navbar.Brand>
           <Nav>
-            <Nav.Link>
-              <Link to='/' style={{ color: '#F6F6F6', textDecoration: 'none' }}>
-                <Button variant='dark' className='rounded-pill'>
-                  Home
-                </Button>
-              </Link>
+            <Nav.Link to='/' as={ NavLink }>
+              <Button variant='dark' className='rounded-pill'>
+                Home
+              </Button>
             </Nav.Link>
-            <Nav.Link>
-              <Link
-                to='/movies'
-                style={{ color: '#F6F6F6', textDecoration: 'none' }}
-              >
-                <Button variant='dark' className='rounded-pill'>
-                  Movies
-                </Button>
-              </Link>
+            <Nav.Link to='/movies' as={ NavLink }>
+              <Button variant='dark' className='rounded-pill'>
+                Movies
+              </Button>
             </Nav.Link>
-            <Nav.Link>
-              <Link
-                to='/favorite'
-                style={{ color: '#F6F6F6', textDecoration: 'none' }}
-              >
-                <Button variant='dark' className='rounded-pill'>
-                  My Favorite Movies
-                </Button>
-              </Link>
+            <Nav.Link to='/favorite' as={ NavLink } >
+              <Button variant='dark' className='rounded-pill'>
+                My Favorite Movies
+              </Button>
             </Nav.Link>
           </Nav>
         </Container>
