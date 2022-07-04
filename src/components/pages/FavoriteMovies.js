@@ -4,7 +4,7 @@ import { Container, Row } from 'react-bootstrap'
 import MovieGridTemplate from '../utils/MovieGridTemplate'
 
 const FavoriteMovies = () => {
-  const favoriteMovies = useMovies(state => state.favoriteMovies)
+  const { favoriteMovies } = useMovies()
 
   return favoriteMovies.length > 0 ? (
     <Container>

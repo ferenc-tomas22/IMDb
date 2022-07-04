@@ -10,8 +10,7 @@ const API_URL = process.env.REACT_APP_API_URL ?? 'https://omdbapi.com/'
 
 const Movies = () => {
   const ref = useRef(null)
-  const movies = useMovies(state => state.movies)
-  const setMovies = useMovies(state => state.setMovies)
+  const { movies, setMovies } = useMovies()
   const [ loading, setLoading ] = useState(false)
   const [ searchValue, setSearchValue ] = useState('')
 
