@@ -8,7 +8,8 @@ const recordsPerPage = 20
 const MovieGridTemplate = ({ movies }) => {
   const history = useHistory()
   const pageRecords = useRef(recordsPerPage)
-  const { favoriteMovies, setFavoriteMovies } = useMovies()
+  const favoriteMovies = useMovies(state => state.favoriteMovies)
+  const setFavoriteMovies = useMovies(state => state.setFavoriteMovies)
   const [ moviesInPage, setMoviesInPage ] = useState([])
 
   useEffect(() => {
